@@ -16,13 +16,18 @@ function createWindow () {
     mainWindow = null;
   });
 
-  mainWindow.once('ready-to-show', () => {
-    console.log('dwadawd')
-    autoUpdater.checkForUpdatesAndNotify();
-  });
 }
 
+
+
+// app.on('ready-to-show', () => {
+//     console.log('dwadawdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+//     // autoUpdater.checkForUpdates();
+// });
+
+
 app.on('ready', () => {
+  autoUpdater.checkForUpdates()
   createWindow();
 
 });
@@ -44,22 +49,17 @@ app.on('activate', function () {
 ipcMain.on('app_version', (event) => {
   event.sender.send('app_version', { version: app.getVersion() });
 
-  // event.sender.send('update_available');
-
-
-  autoUpdater.on('update-available', () => {
-    event.sender.send('update_available');
-    // mainWindow.webContents.send('update_available');
-  });
-  autoUpdater.on('update-downloaded', () => {
-    event.sender.send('update_downloaded');
-    // mainWindow.webContents.send('update_downloaded');
-  });
-
 });
 
 ipcMain.on('restart_app', () => {
   autoUpdater.quitAndInstall();
+});
+
+autoUpdater.on ('update-available', () => { 
+  mainWindow.webContents.send ('update_available'); 
+}); 
+autoUpdater.on ('update-download', () => { 
+  mainWindow.webContents.send ('update_downloaded'); 
 });
 
 
