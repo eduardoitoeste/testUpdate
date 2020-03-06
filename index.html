@@ -12,18 +12,18 @@
     }
   </style>
   <style>
-    #notification { 
-  position: fixed; 
-  abajo: 20px; 
-  izquierda: 20 px; 
-  ancho: 200 px; 
-  acolchado: 20px; 
-  radio de borde: 5px; 
-  color de fondo: blanco; 
-  cuadro-sombra: 0 4px 8px 0 rgba (0, 0, 0, 0.2); 
-} 
-.hidden { 
-  display: none; 
+    #notification {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.hidden {
+  display: none;
 }
   </style>
 </head>
@@ -42,38 +42,37 @@
   </script>
 
 
-  <div id = "notificación" class = "hidden"> 
-    <p id = "message"> </p> 
-    <button id = "close-button" onClick = "closeNotification ()"> 
-      Cerrar 
-    </button> 
-    <button id = "botón de reinicio" onClick = "restartApp ()" class = "hidden"> 
-      Reiniciar 
-    </button> 
-  </div>
+  <div id="notification" class="hidden">
+  <p id="message"></p>
+  <button id="close-button" onClick="closeNotification()">
+    Close
+  </button>
+  <button id="restart-button" onClick="restartApp()" class="hidden">
+    Restart
+  </button>
+</div>
 
   <script>
-    notificación const = document.getElementById ('notificación'); 
-
-    const message = document.getElementById ('mensaje'); 
-    const restartButton = document.getElementById ('botón de reinicio'); 
-    ipcRenderer.on ('update_available', () => { 
-      ipcRenderer.removeAllListeners ('update_available'); 
-      message.innerText = 'Hay una nueva actualización disponible. Descargando ahora ...'; 
-      notify.classList.remove ('hidden') ; 
-    }); 
-    ipcRenderer.on ('update_downloaded', () => { 
-      ipcRenderer.removeAllListeners ('update_downloaded'); 
-      message.innerText = 'Actualizar descargado. Se instalará al reiniciar. ¿Reiniciar ahora?'; 
-      restartButton.classList.remove ('hidden '); 
-      notify.classList.remove ('oculto'); 
+    const notification = document.getElementById('notification');
+    const message = document.getElementById('message');
+    const restartButton = document.getElementById('restart-button');
+    ipcRenderer.on('update_available', () => {
+      ipcRenderer.removeAllListeners('update_available');
+      message.innerText = 'A new update is available. Downloading now...';
+      notification.classList.remove('hidden');
+    });
+    ipcRenderer.on('update_downloaded', () => {
+      ipcRenderer.removeAllListeners('update_downloaded');
+      message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+      restartButton.classList.remove('hidden');
+      notification.classList.remove('hidden');
     });
 
-    function closeNotification () { 
-    notificación.classList.add ('oculto'); 
-    } 
-    function restartApp () { 
-      ipcRenderer.send ('restart_app'); 
+    function closeNotification() {
+      notification.classList.add('hidden');
+    }
+    function restartApp() {
+      ipcRenderer.send('restart_app');
     }
 
   </script>   
