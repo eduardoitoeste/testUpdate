@@ -1,0 +1,25 @@
+{
+  "name": "testupdated",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.1.0",
+    "electron-builder": "^22.4.0"
+  },
+  "dependencies": {
+    "electron-updater": "^2.2.4"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/eduardoitoeste/testUpdate.git"
+  },
+}

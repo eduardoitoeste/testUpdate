@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+  <title>Electron Auto Update Example</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background-color: #eaeaea;
+      text-align: center;
+    }
+  </style>
+  <style>
+    #notification { 
+  position: fixed; 
+  abajo: 20px; 
+  izquierda: 20 px; 
+  ancho: 200 px; 
+  acolchado: 20px; 
+  radio de borde: 5px; 
+  color de fondo: blanco; 
+  cuadro-sombra: 0 4px 8px 0 rgba (0, 0, 0, 0.2); 
+} 
+.hidden { 
+  display: none; 
+}
+  </style>
+</head>
+<body>
+  <h1>Electron Auto Update Example</h1>
+  <p id="version"></p>
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+  </script>
+
+
+  <div id = "notificación" class = "hidden"> 
+    <p id = "message"> </p> 
+    <button id = "close-button" onClick = "closeNotification ()"> 
+      Cerrar 
+    </button> 
+    <button id = "botón de reinicio" onClick = "restartApp ()" class = "hidden"> 
+      Reiniciar 
+    </button> 
+  </div>
+
+  <script>
+    notificación const = document.getElementById ('notificación'); 
+
+    const message = document.getElementById ('mensaje'); 
+    const restartButton = document.getElementById ('botón de reinicio'); 
+    ipcRenderer.on ('update_available', () => { 
+      ipcRenderer.removeAllListeners ('update_available'); 
+      message.innerText = 'Hay una nueva actualización disponible. Descargando ahora ...'; 
+      notify.classList.remove ('hidden') ; 
+    }); 
+    ipcRenderer.on ('update_downloaded', () => { 
+      ipcRenderer.removeAllListeners ('update_downloaded'); 
+      message.innerText = 'Actualizar descargado. Se instalará al reiniciar. ¿Reiniciar ahora?'; 
+      restartButton.classList.remove ('hidden '); 
+      notify.classList.remove ('oculto'); 
+    });
+
+    function closeNotification () { 
+    notificación.classList.add ('oculto'); 
+    } 
+    function restartApp () { 
+      ipcRenderer.send ('restart_app'); 
+    }
+
+  </script>   
+</body>
