@@ -28,19 +28,6 @@
   </style>
 </head>
 <body>
-  <h1>Electron Auto Update Example</h1>
-  <p id="version"></p>
-  <script>
-    const { ipcRenderer } = require('electron');
-    const version = document.getElementById('version');
-    
-    ipcRenderer.send('app_version');
-    ipcRenderer.on('app_version', (event, arg) => {
-      ipcRenderer.removeAllListeners('app_version');
-      version.innerText = 'Version ' + arg.version;
-    });
-  </script>
-
 
   <div id="notification" class="hidden">
   <p id="message"></p>
@@ -52,7 +39,18 @@
   </button>
 </div>
 
+  <h1>Electron Auto Update Example</h1>
+  <p id="version"></p>
   <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+
     const notification = document.getElementById('notification');
     const message = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
@@ -74,6 +72,9 @@
     function restartApp() {
       ipcRenderer.send('restart_app');
     }
+  </script>
 
-  </script>   
+
+  
+
 </body>
