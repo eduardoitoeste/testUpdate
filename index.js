@@ -27,9 +27,9 @@ function createWindow () {
 
 
 app.on('ready', () => {
-  
-  createWindow();
   autoUpdater.checkForUpdates()
+  createWindow();
+
 });
 
 app.on('window-all-closed', function () {
@@ -59,7 +59,19 @@ autoUpdater.on ('update-available', () => {
   mainWindow.webContents.send ('update_available'); 
 }); 
 autoUpdater.on ('update-download', () => { 
-  mainWindow.webContents.send ('update_downloaded'); 
+   
+});
+
+autoUpdater.on('download-progress', function (progressObj) {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + ' - Downloaded ' + parseInt(progressObj.percent) + '%';
+    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+    mainWindow.webContents.send('update_download-progress',log_message); 
+    // sendStatusToWindow(log_message);
+});
+
+autoUpdater.on('update-downloaded', function (info) {
+    mainWindow.webContents.send ('update_downloaded');
 });
 
 

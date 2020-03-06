@@ -51,6 +51,11 @@
       version.innerText = 'Version ' + arg.version;
     });
 
+    ipcRenderer.on('update_download-progress', (event, arg) => {
+        console.log(event)
+        console.log(arg)
+    });
+
     const notification = document.getElementById('notification');
     const message = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
